@@ -44,7 +44,7 @@ Implemente a funcionalidade de Cancelamento de Passagens.
 
 - Se um agente tentar vender e o ônibus estiver lotado, a thread não deve apenas falhar, ela deve entrar em espera usando `wait()`.
 
-- Crie uma thread separada que simula um Cancelamento após alguns segundos. Ao cancelar, ela incrementa o número de assentos e usa `notify()` ou `notifyAll()` para avisar as threads que estavam esperando.
+- Crie uma thread separada que simula um cancelamento após alguns segundos. Ao cancelar, ela incrementa o número de assentos e usa `notify()` ou `notifyAll()` para avisar as threads que estavam esperando.
 
 **Nota:** Lembre-se que `wait()` e `notify()` devem ser chamados dentro de um bloco sincronizado.
 
