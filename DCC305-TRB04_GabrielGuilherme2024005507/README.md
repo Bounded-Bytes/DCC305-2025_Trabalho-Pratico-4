@@ -286,5 +286,3 @@ Imagine uma balada com capacidade para **3 pessoas**:
 **Neste caso:**
 - **Synchronized** protege `assentosDisponiveis` (dados compartilhados)
 - **Semaphore** limita conexões ao servidor (controle de recursos)
-
----
