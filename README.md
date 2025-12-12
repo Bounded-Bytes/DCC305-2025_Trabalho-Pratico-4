@@ -1,1 +1,3 @@
-# DCC305-2025_Trabalho-Pratico-4
+# Repositório de Atividades Extras – AOC
+
+### Autor: Gabriel Guilherme Figueiredo (2024005507)
