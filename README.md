@@ -1,4 +1,6 @@
-# Sistema de Vendas AMATUR - Controle de Concorrência
+# Trabalho Prático 4 – POO
+
+### Autor: Gabriel Guilherme Figueiredo (2024005507)
 
 ## 1. Contextualização
 
