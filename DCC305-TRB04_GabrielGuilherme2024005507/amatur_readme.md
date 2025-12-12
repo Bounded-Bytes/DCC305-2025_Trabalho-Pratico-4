@@ -1,7 +1,5 @@
 # 🚌 Sistema AMATUR - Controle de Concorrência em Java
 
-**Disciplina:** Programação Orientada a Objetos  
-**Aluno:** [Seu Nome]  
 **Tema:** Controle de Concorrência e Sincronização de Threads
 
 ---
@@ -13,7 +11,6 @@
 3. [Parte II - Synchronized (Mutex)](#parte-ii---synchronized-mutex)
 4. [Parte III - Wait e Notify](#parte-iii---wait-e-notify)
 5. [Parte IV - Semáforos](#parte-iv---semáforos)
-6. [Conclusões](#conclusões)
 
 ---
 
@@ -25,7 +22,7 @@ Este projeto simula esse cenário caótico e implementa soluções progressivas 
 
 ---
 
-## 🔴 Parte I - Race Condition (O Caos)
+## Parte I - Race Condition (O Caos)
 
 ### 📊 Saída do Console (Problema)
 
@@ -60,7 +57,7 @@ PARTE I: DEMONSTRANDO RACE CONDITION (O CAOS)
 2. Todas as threads executaram a verificação `if (assentosDisponiveis > 0)` **simultaneamente**
 3. Como não há sincronização, **todas viram 5 assentos disponíveis**
 4. O `Thread.sleep(100)` simula latência, mas as threads já passaram pela verificação
-5. Todas decrementam o contador, resultando em **-2 assentos** (overbooking de 2 passagens!)
+5. Todas decrementam o contador, resultando em **-2 assentos** (overbooking de 2 passagens)
 
 **Por que isso é um Race Condition?**
 
@@ -72,7 +69,7 @@ PARTE I: DEMONSTRANDO RACE CONDITION (O CAOS)
 
 ---
 
-## 🟢 Parte II - Synchronized (Mutex)
+## Parte II - Synchronized (Mutex)
 
 ### 📊 Saída do Console (Solução)
 
@@ -107,7 +104,7 @@ O **synchronized** cria um **mutex (lock)** sobre o objeto, garantindo que:
 2. As outras threads ficam **bloqueadas** esperando o lock ser liberado
 3. A operação se torna **atômica** (indivisível)
 
-#### **Implementação Inteligente**
+#### **Implementação Inteligente:**
 
 ```java
 synchronized(this) {  // Lock no objeto atual (onibus)
@@ -125,17 +122,17 @@ synchronized(this) {  // Lock no objeto atual (onibus)
 - ✅ **Flexibilidade:** Código fora do bloco pode executar em paralelo
 - ❌ Sincronizar o método inteiro (`synchronized void reservarAssento()`) seria menos eficiente
 
-#### **Fluxo Corrigido**
+#### **Fluxo Corrigido:**
 
 1. Thread 1 adquire o lock → verifica → decrementa → libera o lock
 2. Thread 2 adquire o lock → verifica o **novo valor** → decrementa → libera
 3. Thread 6 adquire o lock → verifica (0 assentos) → **não decrementa** → libera
 
-**Resultado:** Inconsistência eliminada! ✅
+**Resultado:** Inconsistência eliminada!
 
 ---
 
-## 🟡 Parte III - Wait e Notify
+## Parte III - Wait e Notify
 
 ### 📊 Saída do Console (Produtor-Consumidor)
 
@@ -201,12 +198,12 @@ while (assentosDisponiveis <= 0) {
    - Elas competem pelo lock novamente
    - Quando pegam o lock, saem do `wait()` e continuam
 
-#### **Analogia do Restaurante**
+#### **Analogia do Restaurante:**
 
-- **Busy-waiting:** Cliente fica perguntando "Minha mesa está pronta?" a cada segundo (chato e ineficiente)
-- **Wait/Notify:** Cliente senta na sala de espera e o garçom **chama** quando a mesa fica disponível (civilizado e eficiente)
+- **Busy-waiting:** Cliente fica perguntando "Minha mesa está pronta?" a cada segundo (ineficiente)
+- **Wait/Notify:** Cliente senta na sala de espera e o garçom **chama** quando a mesa fica disponível (eficiente)
 
-#### **Economia de CPU**
+#### **Economia de CPU:**
 
 | Método | Uso de CPU | Estado da Thread |
 |--------|-----------|------------------|
@@ -217,7 +214,7 @@ while (assentosDisponiveis <= 0) {
 
 ---
 
-## 🟣 Parte IV - Semáforos
+## Parte IV - Semáforos
 
 ### 📊 Saída do Console (Controle de Conexões)
 
@@ -246,12 +243,12 @@ PARTE IV: CONTROLE DE FLUXO COM SEMÁFOROS
 [PARTE IV] ✓ Agente-3 RESERVOU! Restam: 2 assentos
 [PARTE IV] 🚪 Agente-3 SAIU do sistema
 
-✓ RESULTADO: Sistema limitou conexões simultâneas a 3!
+✓ RESULTADO: Sistema limitou conexões simultâneas a 3.
 ```
 
 ### 🚦 Semáforo: "Segurança da Balada"
 
-#### **Conceito**
+#### **Conceito:**
 
 Um **Semaphore** controla o número de **permissões disponíveis**:
 
@@ -259,7 +256,7 @@ Um **Semaphore** controla o número de **permissões disponíveis**:
 Semaphore semaforoConexoes = new Semaphore(3); // 3 permissões
 ```
 
-#### **Operações**
+#### **Operações:**
 
 1. **acquire()** - Pega uma permissão (decrementa o contador)
    - Se contador > 0: Permissão concedida
@@ -268,7 +265,7 @@ Semaphore semaforoConexoes = new Semaphore(3); // 3 permissões
 2. **release()** - Devolve a permissão (incrementa o contador)
    - Acorda uma thread que estava esperando
 
-#### **Analogia**
+#### **Analogia:**
 
 Imagine uma balada com capacidade para **3 pessoas**:
 
@@ -286,43 +283,8 @@ Imagine uma balada com capacidade para **3 pessoas**:
 | **Uso** | Proteger dados | Controlar acesso |
 | **Threads simultâneas** | 1 | N |
 
-**Neste projeto:**
+**Neste caso:**
 - **Synchronized** protege `assentosDisponiveis` (dados compartilhados)
 - **Semaphore** limita conexões ao servidor (controle de recursos)
 
 ---
-
-## 🎓 Conclusões
-
-### **Lições Aprendidas**
-
-1. **Race Conditions** são bugs silenciosos e perigosos em sistemas concorrentes
-2. **Synchronized** garante exclusão mútua em seções críticas
-3. **Wait/Notify** implementa comunicação eficiente entre threads (produtor-consumidor)
-4. **Semaphores** controlam acesso a recursos limitados
-
-### **Aplicações Reais**
-
-- 🎫 **Sistemas de reserva** (hotéis, passagens, ingressos)
-- 🏦 **Bancos de dados** (transações ACID)
-- 🌐 **Servidores web** (pool de conexões)
-- 🎮 **Jogos multiplayer** (sincronização de estado)
-
-### **Próximos Passos**
-
-- Estudar **java.util.concurrent** (ExecutorService, CountDownLatch, CyclicBarrier)
-- Aprender sobre **locks explícitos** (ReentrantLock, ReadWriteLock)
-- Praticar **padrões de concorrência** (Producer-Consumer, Readers-Writers)
-
----
-
-## 📚 Referências
-
-- Oracle Java Documentation - Concurrency
-- Material da Aula-22 - Programação Orientada a Objetos
-- Java Concurrency in Practice (Brian Goetz)
-
----
-
-**Desenvolvido para a disciplina de Programação Orientada a Objetos**  
-**Data:** Dezembro de 2025
